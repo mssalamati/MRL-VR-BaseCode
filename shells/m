@@ -1,0 +1,2 @@
+
+terminator -f -g ./shells/testConfig.conf
