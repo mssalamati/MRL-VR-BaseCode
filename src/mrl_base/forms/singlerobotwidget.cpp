@@ -17,7 +17,6 @@ singleRobotWidget::singleRobotWidget(QLabel* MainMonitor, QWidget *parent) :
     Pal.setColor(QPalette::Background, Qt::yellow);
     ui->label->setAutoFillBackground(true);
     ui->label->setPalette(Pal);
-    ui->progressBar->setValue(0);
 }
 
 singleRobotWidget::~singleRobotWidget()
@@ -27,9 +26,9 @@ singleRobotWidget::~singleRobotWidget()
 
 void singleRobotWidget::SetVideo(QPixmap image)
 {
-    ui->label_2->setPixmap(image);
+    ui->label_2->setPixmap(image.scaled(ui->label_2->size(), Qt::KeepAspectRatio));
     if (isSelected)
-        mainMonitor->setPixmap(image);
+        mainMonitor->setPixmap(image.scaled(mainMonitor->size(), Qt::KeepAspectRatio));
 }
 
 void singleRobotWidget::setRobotNumber(int robotNumber)

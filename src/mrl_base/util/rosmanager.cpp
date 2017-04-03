@@ -121,6 +121,7 @@ rosmanager* rosmanager::Instance()
 
 void rosmanager::init(int argc, char *argv[])
 {
+    return;
     ros::init(argc, argv, "mcore");
 
     ROS_INFO("MRL-VR Core ROS initiated");

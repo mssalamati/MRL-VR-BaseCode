@@ -3,5 +3,7 @@
         <file>robot_yellow.png</file>
         <file>robot_red.png</file>
         <file>robot_silver.png</file>
+        <file>play.png</file>
+        <file>stop.png</file>
     </qresource>
 </RCC>

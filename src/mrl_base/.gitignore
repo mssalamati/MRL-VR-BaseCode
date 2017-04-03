@@ -1,0 +1,8 @@
+*.o
+*~
+*.user
+devel
+build
+build*
+.catkin_workspace
+CMakeLists.txt

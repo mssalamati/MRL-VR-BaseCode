@@ -9,6 +9,7 @@
 #include <sensor_msgs/image_encodings.h>
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
+#include <qtimer.h>
 
 namespace Ui {
 class MainWindow;
@@ -25,20 +26,25 @@ public:
 
 private slots:
     void on_actionSetup_New_Run_triggered();
-
     void on_actionRun_triggered();
+    void on_timer_event();
+    void on_actionTimerPlay_triggered();
+    void on_actionTimerStop_triggered();
 
 private:
     Ui::MainWindow *ui;
     void OpenSetupDialog();
     void AssignRobotViews(int robotCnt);
 
-    QWidget * central;
+//    QWidget * central;
 //    QGridLayout *gridLayout;
-    QFrame * frames[20];
+//    QFrame * frames[20];
     singleRobotWidget *singlerobotview[20];
-    QLayout *layouts[20];
+//    QLayout *layouts[20];
     QLabel* monitor;
+    QTimer* timer;
+    int timeLeft; bool isTimerRunning;
+
 
     void ImSelected(int robotNumber);
 
