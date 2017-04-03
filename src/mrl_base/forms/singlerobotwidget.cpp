@@ -4,9 +4,11 @@
 #include <QMouseEvent>
 #include <QGraphicsView>
 
-singleRobotWidget::singleRobotWidget(QWidget *parent) :
+singleRobotWidget::singleRobotWidget(QLabel* MainMonitor, QWidget *parent) :
     QWidget(parent),
-    ui(new Ui::singleRobotWidget)
+    ui(new Ui::singleRobotWidget),
+    mainMonitor(MainMonitor),
+    isSelected(false)
 {
     ui->setupUi(this);
 
@@ -26,6 +28,8 @@ singleRobotWidget::~singleRobotWidget()
 void singleRobotWidget::SetVideo(QPixmap image)
 {
     ui->label_2->setPixmap(image);
+    if (isSelected)
+        mainMonitor->setPixmap(image);
 }
 
 void singleRobotWidget::setRobotNumber(int robotNumber)
@@ -37,6 +41,7 @@ void singleRobotWidget::setRobotNumber(int robotNumber)
 
 void singleRobotWidget::setAsSelected(bool isSelect)
 {
+    isSelected = isSelect;
     QPalette Pal(palette());
     switch (isSelect)
     {
@@ -55,3 +60,4 @@ void singleRobotWidget::mouseReleaseEvent(QMouseEvent * event)
 {
     ImSelected(_robotnumber);
 }
+

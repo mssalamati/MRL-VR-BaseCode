@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
 
     central = new QWidget(this);
     setCentralWidget(central);
-    gridLayout = new QGridLayout(central);
+//    gridLayout = new QGridLayout(central);
     AssignRobotViews(6);
 
     rosmanager::Instance()->VideoCallback[0].connect(boost::bind(&MainWindow::imageCallback1, this, _1));
@@ -65,24 +65,52 @@ void MainWindow::ImSelected(int robotNumber)
     singlerobotview[robotNumber-1]->setAsSelected(true);
 }
 
-void MainWindow::AssignRobotViews(int robotCnt)
+void MainWindow::AssignRobotViews(int)
 {
-    int N = robotCnt;
-    int n = ceil(sqrt(N));
-    for (int i = 0; i < N; ++ i) {
-        frames[i] = new QFrame(central);
-        frames[i]->setFrameShape(QFrame::StyledPanel);
-        gridLayout->addWidget(frames[i], i/n, i%n, 1, 1);
+    int N = 6;
+
+    std::vector<QRect> layouts;
+    layouts.push_back(QRect(0,   35, 280, 280));
+    layouts.push_back(QRect(280, 35, 280, 280));
+    layouts.push_back(QRect(560, 35, 280, 280));
+    layouts.push_back(QRect(0,   315, 280, 280));
+    layouts.push_back(QRect(280, 315, 280, 280));
+    layouts.push_back(QRect(560, 315, 280, 280));
+
+    monitor = new QLabel(this);
+    monitor->setVisible(true);
+    monitor->setGeometry(840, 35, 560, 560);
+    monitor->setFrameShape(QFrame::Box);
+
+    for (int i = 0; i < N; ++ i)
+    {
+        singlerobotview[i] = new singleRobotWidget(monitor, this);
+        singleRobotWidget* srw = singlerobotview[i];
+        srw->setVisible(true);
+        srw->setGeometry(layouts.at(i));
+
+
+        srw->setRobotNumber(i+1);
+        srw->ImSelected.connect(boost::bind(&MainWindow::ImSelected, this, _1));
     }
-    for (int i = 0; i < N; ++ i) {
-        layouts[i] = new QVBoxLayout;
-        singlerobotview[i] = new singleRobotWidget(frames[i]);
-        singlerobotview[i]->setRobotNumber(i+1);
-        singlerobotview[i]->ImSelected.connect(boost::bind(&MainWindow::ImSelected, this, _1));
-        if(i==0)singlerobotview[i] ->setAsSelected(true);
-        layouts[i]->addWidget(singlerobotview[i]);
-        frames[i]->setLayout(layouts[i]);
-    }
+
+
+//    int N = robotCnt;
+//    int n = ceil(sqrt(N));
+//    for (int i = 0; i < N; ++ i) {
+//        frames[i] = new QFrame(central);
+//        frames[i]->setFrameShape(QFrame::StyledPanel);
+//        gridLayout->addWidget(frames[i], i/n, i%n, 1, 1);
+//    }
+//    for (int i = 0; i < N; ++ i) {
+//        layouts[i] = new QVBoxLayout;
+//        singlerobotview[i] = new singleRobotWidget(frames[i]);
+//        singlerobotview[i]->setRobotNumber(i+1);
+//        singlerobotview[i]->ImSelected.connect(boost::bind(&MainWindow::ImSelected, this, _1));
+//        if(i==0)singlerobotview[i] ->setAsSelected(true);
+//        layouts[i]->addWidget(singlerobotview[i]);
+//        frames[i]->setLayout(layouts[i]);
+//    }
 }
 
 void MainWindow::OpenSetupDialog()

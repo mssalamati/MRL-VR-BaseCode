@@ -5,6 +5,7 @@
 #include "singlerobotwidget.h"
 #include <QGridLayout>
 #include <QFrame>
+#include <QLabel>
 #include <sensor_msgs/image_encodings.h>
 #include <image_transport/image_transport.h>
 #include <cv_bridge/cv_bridge.h>
@@ -33,10 +34,11 @@ private:
     void AssignRobotViews(int robotCnt);
 
     QWidget * central;
-    QGridLayout *gridLayout;
+//    QGridLayout *gridLayout;
     QFrame * frames[20];
     singleRobotWidget *singlerobotview[20];
     QLayout *layouts[20];
+    QLabel* monitor;
 
     void ImSelected(int robotNumber);
 
